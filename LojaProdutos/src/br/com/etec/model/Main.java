@@ -1,12 +1,11 @@
 package br.com.etec.model;
-	
+
 import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.fxml.FXMLLoader;
-
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Main extends Application {
 	@Override

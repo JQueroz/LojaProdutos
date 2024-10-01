@@ -1,6 +1,7 @@
 package br.com.etec.model;
 
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +28,7 @@ public class Operacoes {
 	private Stage acpPalco;
 	
 	@FXML
-	private void acessarConta(ActionEvent event) {
+	private void acessarConta(ActionEvent event) throws SQLException {
 		String nomeUsuario;
 		
 		nomeUsuario = txtUsuario.getText();
@@ -43,16 +44,21 @@ public class Operacoes {
 			else {
 				if(senhaUsuario.isEmpty()) {
 				mostrarMensagem(Alert.AlertType.WARNING, "FALTANDO DADOS", "INFORMAR A SENHA");
+				
+				txtUsuario.clear();
+				psfUsuario.clear();
 				}
 			}
 			
 		}//if
 		
 		else {
-			if(nomeUsuario.equals("admin") && senhaUsuario.equals("123456")){
-				mostrarMensagem(Alert.AlertType.CONFIRMATION, "ACESSO PERMIOTIDO", "Logado no Sistema");}
+			if(verificarUsuarioSenha(nomeUsuario, senhaUsuario)) {
+				mostrarMensagem(Alert.AlertType.CONFIRMATION,
+						"ACESSO PERMIOTIDO", "Logado no Sistema");}
 			else {
-				mostrarMensagem(Alert.AlertType.ERROR, "ERRO DE ACESSO", "Usuario ou senha errada.");
+				mostrarMensagem(Alert.AlertType.ERROR,
+						"ERRO DE ACESSO", "Usuario ou senha errada.");
 			}
 		}
 	}//acessarConta
@@ -84,8 +90,8 @@ public class Operacoes {
         boolean usuarioValido = false;
 
         try {
-            conexao = Conexao.conectar();
-            String sql = "SELECT * FROM tabelalogin WHERE usuario = ? AND senha = ?";
+            conexao = ClasseConexao.conectar();
+            String sql = "SELECT * FROM login_tb WHERE usuario = ? AND senha = ?";
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, usuario);
             stmt.setString(2, senha);
@@ -101,7 +107,7 @@ public class Operacoes {
             if (stmt != null) {
                 stmt.close();
             }
-            Conexao.fechar(conexao);
+            ClasseConexao.fechar(conexao);
         }
 
         return usuarioValido;
