@@ -3,6 +3,7 @@ module LojaProdutos {
 	requires javafx.fxml;
 	requires javafx.graphics;
 	requires java.sql;
+	requires java.desktop;
 	
 	opens br.com.etec.model to javafx.graphics, javafx.fxml;
 }
